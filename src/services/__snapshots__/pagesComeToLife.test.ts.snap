@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Layout snapshots > keeps the QR page layout contract stable 1`] = `
+{
+  "background": "golden-hour",
+  "colorPalette": [
+    "#F8F4ED",
+    "#E2D8CC",
+    "#80957A",
+    "#56342F",
+  ],
+  "columns": 1,
+  "decorativeElements": [
+    "qr-safe-zone",
+  ],
+  "density": "low",
+  "frames": [
+    "media-frame",
+  ],
+  "id": "qr-memory-page",
+  "margin": 18,
+  "name": "QR Memory Page",
+  "padding": 28,
+  "stickers": [
+    "play-badge",
+  ],
+  "typographySet": {
+    "body": "Inter",
+    "heading": "Playfair Display",
+  },
+}
+`;
