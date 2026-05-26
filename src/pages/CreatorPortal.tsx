@@ -156,7 +156,7 @@ export function CreatorPortal() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-[180px_1fr]">
-            <img className="aspect-[4/3] w-full rounded-keepsake object-cover shadow-soft" src={previewImageUrl} alt="" />
+            <img className="aspect-[4/3] w-full rounded-keepsake object-cover shadow-soft" src={previewImageUrl} alt="" loading="lazy" decoding="async" />
             <label className="grid min-h-36 cursor-pointer place-items-center rounded-keepsake border border-dashed border-keepsake-roseDeep/25 bg-keepsake-cream p-4 text-center">
               <span className="inline-flex flex-col items-center gap-2 text-sm font-extrabold text-keepsake-roseDeep">
                 <ImagePlus size={24} aria-hidden="true" />

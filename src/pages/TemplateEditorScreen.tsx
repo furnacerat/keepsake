@@ -555,7 +555,7 @@ export function TemplateEditorScreen() {
               <div className="mt-4 grid gap-3">
                 {mediaItems.map((media, index) => (
                   <div className="flex items-center gap-3 rounded-2xl bg-keepsake-cream p-2" key={media.id}>
-                    <img className="h-16 w-16 rounded-xl object-cover" src={media.thumbnailUrl ?? media.src} alt="" />
+                    <img className="h-16 w-16 rounded-xl object-cover" src={media.thumbnailUrl ?? media.src} alt="" loading="lazy" decoding="async" />
                     <div className="flex-1">
                       <p className="text-sm font-bold text-keepsake-ink">Slot {index + 1}</p>
                       <p className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.08em] text-keepsake-muted">

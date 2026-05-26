@@ -127,7 +127,7 @@ export function MarketplaceScreen() {
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
           <div className="ks-card overflow-hidden">
-            <img className="aspect-[16/10] w-full object-cover" src={item.previewImageUrl} alt="" />
+            <img className="aspect-[16/10] w-full object-cover" src={item.previewImageUrl} alt="" loading="lazy" decoding="async" />
             <div className="space-y-4 p-5 md:p-7">
               <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-keepsake-accentStrong">
                 <span>{item.category}</span>

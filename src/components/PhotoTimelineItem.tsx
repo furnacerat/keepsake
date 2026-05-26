@@ -28,7 +28,7 @@ export function PhotoTimelineItem({
         isRangeSelected ? 'ring-4 ring-keepsake-gold/70' : 'hover:-translate-y-0.5',
       ].join(' ')}
     >
-      <img className="aspect-[4/3] w-full object-cover" src={memory.src} alt="" />
+      <img className="aspect-[4/3] w-full object-cover" src={memory.src} alt="" loading="lazy" decoding="async" />
       <div className="p-4">
         <div className="flex items-start justify-between gap-3">
           <p className="text-sm font-extrabold text-keepsake-roseDeep">{formatDate(memory.createdAt)}</p>

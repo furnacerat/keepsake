@@ -25,6 +25,8 @@ export function MarketplaceItemCard({ averageRating = 0, item, owned = false }: 
           className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.04]"
           src={item.previewImageUrl}
           alt=""
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div className="space-y-3 p-4 md:p-5">

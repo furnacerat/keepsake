@@ -70,7 +70,7 @@ export function BookPagePreview({ onDropPage, onSelect, page, selected }: BookPa
 
         {page.qrCode ? (
           <div className="mt-3 flex items-center gap-2">
-            <img className="h-12 w-12 rounded-lg" src={generateQrSvg(page.qrCode.url)} alt="" />
+            <img className="h-12 w-12 rounded-lg" src={generateQrSvg(page.qrCode.url)} alt="" loading="lazy" decoding="async" />
             <span className="inline-flex items-center gap-1 text-xs font-bold text-keepsake-accentStrong">
               <QrCode size={13} aria-hidden="true" />
               Pages Come To Life

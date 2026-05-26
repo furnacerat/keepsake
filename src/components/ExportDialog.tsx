@@ -2,8 +2,8 @@ import { Download, FileImage, FileText, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { TemplateRenderData } from './TemplateEngine';
 import type { PrintExportType, PrintResolution, PrintSize } from '../models/keepsake';
-import { estimatePrintFileSize, printResolutionOptions, printShopPresets } from '../services/PrintEngine';
-import type { PrintRenderResult, PrintRenderSettings } from '../services/PrintEngine';
+import { estimatePrintFileSize, printResolutionOptions, printShopPresets } from '../services/printSettings';
+import type { PrintRenderResult, PrintRenderSettings } from '../services/printSettings';
 import { usePrintEngine } from '../hooks/usePrintEngine';
 
 type ExportDialogProps = {

@@ -638,6 +638,8 @@ export function MemoryBoxScreen() {
                       className="h-full w-full object-cover transition duration-200 group-hover:scale-105"
                       src={item.src}
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                     />
                     {isMultiSelectMode ? (
                       <span

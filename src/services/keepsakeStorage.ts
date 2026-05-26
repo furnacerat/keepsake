@@ -100,3 +100,8 @@ export function updateKeepsake(id: string, input: UpdateKeepsakeInput) {
 export function getKeepsake(id: string) {
   return getKeepsakes().find((keepsake) => keepsake.id === id);
 }
+
+export function deleteKeepsake(id: string) {
+  const keepsakes = getKeepsakes().filter((keepsake) => keepsake.id !== id);
+  writeKeepsakes(keepsakes);
+}

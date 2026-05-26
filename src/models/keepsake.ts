@@ -4,6 +4,7 @@ export type RecipientType = 'Myself' | 'Someone Else';
 export type UnlockType = 'none' | 'date';
 export type KeepsakeStatus = 'locked' | 'unlocked';
 export type KeepsakeMediaType = 'photo' | 'video' | 'audio';
+export type MemoryType = 'Photo Memory' | 'Voice Memory' | 'Written Story' | 'Family Legacy';
 export type AnimationStyle = 'none' | 'gentleFade' | 'panAndZoom' | 'scrapbookReveal' | 'filmstripScroll';
 export type AnimationExportFormat = 'static' | 'mp4' | 'gif' | 'webm';
 export type StoryTone = 'warm' | 'nostalgic' | 'playful' | 'romantic' | 'documentary';
@@ -12,6 +13,7 @@ export type PrintResolution = '1080p' | '4k' | 'print-300' | 'ultra-print-600';
 export type PrintSize = '5x7' | '8x10' | '11x14' | '12x12' | 'a4' | 'custom';
 
 export const keepsakeMediaTypeSchema = z.enum(['photo', 'video', 'audio']);
+export const memoryTypeSchema = z.enum(['Photo Memory', 'Voice Memory', 'Written Story', 'Family Legacy']);
 export const animationStyleSchema = z.enum([
   'none',
   'gentleFade',
@@ -110,6 +112,12 @@ export type Keepsake = {
   primaryEventId?: string;
   primaryPersonIds?: string[];
   primaryPlaceId?: string;
+  memoryType?: MemoryType;
+  person?: string;
+  memoryDate?: string;
+  approximateTimePeriod?: string;
+  photoPlaceholder?: boolean;
+  voicePlaceholder?: boolean;
 };
 
 export const keepsakeSchema = z.object({
@@ -143,6 +151,12 @@ export const keepsakeSchema = z.object({
   primaryEventId: z.string().optional(),
   primaryPersonIds: z.array(z.string()).optional(),
   primaryPlaceId: z.string().optional(),
+  memoryType: memoryTypeSchema.optional(),
+  person: z.string().optional(),
+  memoryDate: z.string().optional(),
+  approximateTimePeriod: z.string().optional(),
+  photoPlaceholder: z.boolean().optional(),
+  voicePlaceholder: z.boolean().optional(),
 });
 
 export type CreateKeepsakeInput = Omit<Keepsake, 'id' | 'createdAt' | 'status'>;

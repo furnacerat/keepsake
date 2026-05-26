@@ -29,7 +29,7 @@ type TemplateEngineProps = {
 function PhotoSlot({ photo, className = '', printMode = false }: { photo?: TemplatePhoto; className?: string; printMode?: boolean }) {
   return (
     <div className={`overflow-hidden rounded-2xl bg-white/65 ${printMode ? '' : 'shadow-soft'} ${className}`}>
-      {photo ? <img className="h-full w-full object-cover" src={photo.src} alt="" /> : null}
+      {photo ? <img className="h-full w-full object-cover" src={photo.src} alt="" loading="lazy" decoding="async" /> : null}
     </div>
   );
 }

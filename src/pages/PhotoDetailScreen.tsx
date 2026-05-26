@@ -97,7 +97,7 @@ export function PhotoDetailScreen() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
         <div className="overflow-hidden rounded-[1.45rem] border border-keepsake-roseDeep/10 bg-white/75 p-3 shadow-keepsake md:p-4">
-          <img className="max-h-[72vh] w-full rounded-[1.15rem] object-contain" src={item.src} alt="" />
+          <img className="max-h-[72vh] w-full rounded-[1.15rem] object-contain" src={item.src} alt="" loading="lazy" decoding="async" />
         </div>
 
         <aside className="rounded-[1.45rem] border border-keepsake-roseDeep/10 bg-white/78 p-5 shadow-keepsake md:p-6">

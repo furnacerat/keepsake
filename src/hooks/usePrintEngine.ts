@@ -1,9 +1,7 @@
 import { useCallback, useState } from 'react';
 import type { TemplateRenderData } from '../components/TemplateEngine';
 import type { Keepsake } from '../models/keepsake';
-import { renderAlbumExport } from '../services/AlbumExport';
-import { renderPrintExport } from '../services/PrintEngine';
-import type { PrintRenderResult, PrintRenderSettings } from '../services/PrintEngine';
+import type { PrintRenderResult, PrintRenderSettings } from '../services/printSettings';
 
 export function usePrintEngine() {
   const [isRendering, setIsRendering] = useState(false);
@@ -23,6 +21,7 @@ export function usePrintEngine() {
       setIsRendering(true);
       setError(undefined);
       try {
+        const { renderPrintExport } = await import('../services/PrintEngine');
         const nextResult = await renderPrintExport({ data, settings, templateId });
         setResult(nextResult);
         return nextResult;
@@ -49,6 +48,7 @@ export function usePrintEngine() {
       setIsRendering(true);
       setError(undefined);
       try {
+        const { renderAlbumExport } = await import('../services/AlbumExport');
         const nextResult = await renderAlbumExport({ keepsakes, settings, title });
         setResult(nextResult);
         return nextResult;

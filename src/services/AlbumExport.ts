@@ -1,6 +1,6 @@
 import type { Keepsake } from '../models/keepsake';
-import type { PrintRenderResult, PrintRenderSettings } from './PrintEngine';
-import { estimatePrintFileSize, resolvePrintDimensions } from './PrintEngine';
+import { estimatePrintFileSize, resolvePrintDimensions } from './printSettings';
+import type { PrintRenderResult, PrintRenderSettings } from './printSettings';
 
 function createId() {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {

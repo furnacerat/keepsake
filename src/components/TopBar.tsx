@@ -21,9 +21,13 @@ export function TopBar() {
         >
           <img
             className="h-11 w-11 rounded-2xl object-cover shadow-soft ring-1 ring-keepsake-gold/30 md:h-12 md:w-12"
-            src="/keepsake-logo.png"
+            src="/keepsake-logo.webp"
             alt=""
             aria-hidden="true"
+            decoding="async"
+            fetchPriority="high"
+            width="96"
+            height="96"
           />
           Keepsake
         </Link>

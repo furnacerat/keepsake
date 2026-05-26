@@ -156,7 +156,7 @@ export function MediaEngine({ className = '', controls = true, media, mode = 'pa
   }
 
   if (media.type === 'photo') {
-    return <img className={`ks-photo-reveal h-full w-full rounded-keepsake object-cover shadow-soft ${className}`} src={media.src} alt="" />;
+    return <img className={`ks-photo-reveal h-full w-full rounded-keepsake object-cover shadow-soft ${className}`} src={media.src} alt="" loading="lazy" decoding="async" />;
   }
 
   if (media.type === 'video') {
@@ -165,7 +165,7 @@ export function MediaEngine({ className = '', controls = true, media, mode = 'pa
         {controls && mode !== 'export' ? (
           <video className="h-full w-full object-cover" controls poster={media.thumbnailUrl} src={media.src} />
         ) : (
-          <img className="h-full w-full object-cover" src={media.thumbnailUrl ?? media.src} alt="" />
+          <img className="h-full w-full object-cover" src={media.thumbnailUrl ?? media.src} alt="" loading="lazy" decoding="async" />
         )}
         <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/55 px-2 py-1 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-white">
           <FileVideo size={12} aria-hidden="true" />
