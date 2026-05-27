@@ -34,7 +34,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
     >
       <span
         className={[
-          'grid h-14 w-14 shrink-0 place-items-center rounded-keepsake shadow-soft',
+          'ks-icon-badge grid h-14 w-14 shrink-0 place-items-center rounded-keepsake shadow-soft',
           iconClasses[category.accent],
         ].join(' ')}
         aria-hidden="true"

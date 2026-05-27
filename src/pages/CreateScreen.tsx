@@ -304,7 +304,7 @@ export function CreateScreen() {
                     type="button"
                     onClick={() => setEmotionalIntent(item.intent)}
                   >
-                    <span className="grid h-14 w-14 place-items-center rounded-2xl bg-keepsake-blush text-keepsake-roseDeep shadow-soft transition group-hover:scale-105">
+                    <span className="ks-icon-badge grid h-14 w-14 place-items-center rounded-2xl shadow-soft transition group-hover:scale-105">
                       <Icon size={25} aria-hidden="true" />
                     </span>
                     <span className="mt-5 block font-heading text-3xl font-bold leading-none text-keepsake-ink">{item.intent}</span>

@@ -369,6 +369,27 @@
     background: #ffffff;
   }
 
+  .ks-icon-badge {
+    background: #fff3f0 !important;
+    color: #8f4e54 !important;
+    text-shadow: none !important;
+  }
+
+  .ks-icon-badge svg {
+    color: inherit;
+    stroke: currentColor;
+  }
+
+  .ks-app-bg .ks-icon-badge {
+    background: #fff3f0 !important;
+    color: #8f4e54 !important;
+  }
+
+  .ks-app-bg .ks-icon-badge svg {
+    color: #8f4e54 !important;
+    stroke: #8f4e54 !important;
+  }
+
   .ks-section-divider {
     height: 10px;
     border: 0;

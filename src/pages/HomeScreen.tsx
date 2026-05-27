@@ -95,7 +95,7 @@ export function HomeScreen() {
             const Icon = card.icon;
             return (
               <article className="ks-card p-5 md:p-6" key={card.title}>
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-keepsake-blush text-keepsake-roseDeep shadow-soft">
+                <span className="ks-icon-badge grid h-12 w-12 place-items-center rounded-2xl shadow-soft">
                   <Icon size={23} aria-hidden="true" />
                 </span>
                 <h3 className="mt-5 font-heading text-3xl font-bold leading-none text-keepsake-ink">{card.title}</h3>
