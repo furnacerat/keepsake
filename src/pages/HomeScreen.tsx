@@ -47,7 +47,7 @@ export function HomeScreen() {
               Create Your First Keepsake
             </Link>
             <a
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white/88 px-6 py-3 text-base font-extrabold text-keepsake-ink shadow-soft transition active:scale-[0.96] hover:bg-white hover:shadow-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-keepsake-accent/45"
+              className="ks-hero-secondary-cta inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white/90 px-6 py-3 text-base font-extrabold text-keepsake-ink shadow-soft transition active:scale-[0.96] hover:bg-white hover:shadow-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-keepsake-accent/45"
               href="#how-it-works"
             >
               See How It Works

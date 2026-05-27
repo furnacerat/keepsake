@@ -5,6 +5,15 @@ export type UnlockType = 'none' | 'date';
 export type KeepsakeStatus = 'locked' | 'unlocked';
 export type KeepsakeMediaType = 'photo' | 'video' | 'audio';
 export type MemoryType = 'Photo Memory' | 'Voice Memory' | 'Written Story' | 'Family Legacy';
+export type EmotionalIntent =
+  | 'Preserve a Person'
+  | 'Preserve a Moment'
+  | 'Leave Something for the Future'
+  | 'Tell My Story'
+  | 'Save a Family Memory'
+  | 'Create an Unlockable Message';
+export type MemoryMood = 'Tender' | 'Joyful' | 'Grateful' | 'Nostalgic' | 'Hopeful' | 'Reflective';
+export type KeepsakeVisibility = 'private' | 'family' | 'public';
 export type AnimationStyle = 'none' | 'gentleFade' | 'panAndZoom' | 'scrapbookReveal' | 'filmstripScroll';
 export type AnimationExportFormat = 'static' | 'mp4' | 'gif' | 'webm';
 export type StoryTone = 'warm' | 'nostalgic' | 'playful' | 'romantic' | 'documentary';
@@ -14,6 +23,16 @@ export type PrintSize = '5x7' | '8x10' | '11x14' | '12x12' | 'a4' | 'custom';
 
 export const keepsakeMediaTypeSchema = z.enum(['photo', 'video', 'audio']);
 export const memoryTypeSchema = z.enum(['Photo Memory', 'Voice Memory', 'Written Story', 'Family Legacy']);
+export const emotionalIntentSchema = z.enum([
+  'Preserve a Person',
+  'Preserve a Moment',
+  'Leave Something for the Future',
+  'Tell My Story',
+  'Save a Family Memory',
+  'Create an Unlockable Message',
+]);
+export const memoryMoodSchema = z.enum(['Tender', 'Joyful', 'Grateful', 'Nostalgic', 'Hopeful', 'Reflective']);
+export const keepsakeVisibilitySchema = z.enum(['private', 'family', 'public']);
 export const animationStyleSchema = z.enum([
   'none',
   'gentleFade',
@@ -118,6 +137,19 @@ export type Keepsake = {
   approximateTimePeriod?: string;
   photoPlaceholder?: boolean;
   voicePlaceholder?: boolean;
+  videoPlaceholder?: boolean;
+  handwrittenPlaceholder?: boolean;
+  emotionalIntent?: EmotionalIntent;
+  memoryMood?: MemoryMood;
+  memoryTags?: string[];
+  coverImage?: string;
+  coverImageName?: string;
+  lastRevisited?: string;
+  visibility?: KeepsakeVisibility;
+  futureDelivery?: boolean;
+  legacyVault?: boolean;
+  timelineJourney?: string;
+  collectionName?: string;
 };
 
 export const keepsakeSchema = z.object({
@@ -157,6 +189,19 @@ export const keepsakeSchema = z.object({
   approximateTimePeriod: z.string().optional(),
   photoPlaceholder: z.boolean().optional(),
   voicePlaceholder: z.boolean().optional(),
+  videoPlaceholder: z.boolean().optional(),
+  handwrittenPlaceholder: z.boolean().optional(),
+  emotionalIntent: emotionalIntentSchema.optional(),
+  memoryMood: memoryMoodSchema.optional(),
+  memoryTags: z.array(z.string()).optional(),
+  coverImage: z.string().optional(),
+  coverImageName: z.string().optional(),
+  lastRevisited: z.string().optional(),
+  visibility: keepsakeVisibilitySchema.optional(),
+  futureDelivery: z.boolean().optional(),
+  legacyVault: z.boolean().optional(),
+  timelineJourney: z.string().optional(),
+  collectionName: z.string().optional(),
 });
 
 export type CreateKeepsakeInput = Omit<Keepsake, 'id' | 'createdAt' | 'status'>;

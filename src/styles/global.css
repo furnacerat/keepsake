@@ -359,6 +359,16 @@
     transform: scale(0.96);
   }
 
+  .ks-hero-secondary-cta {
+    background: rgb(255 255 255 / 0.9);
+    color: #352a2a !important;
+    text-shadow: none !important;
+  }
+
+  .ks-hero-secondary-cta:hover {
+    background: #ffffff;
+  }
+
   .ks-section-divider {
     height: 10px;
     border: 0;
@@ -477,6 +487,111 @@
     transform: translateY(12px);
     animation: messageFade 900ms ease-out 1200ms forwards;
   }
+
+  .ks-ambient-stage {
+    min-height: 100%;
+    background:
+      radial-gradient(circle at 14% 8%, rgb(var(--ks-accent) / 0.24), transparent 24rem),
+      radial-gradient(circle at 88% 22%, rgb(var(--ks-sage-soft) / 0.3), transparent 22rem),
+      linear-gradient(135deg, rgba(53, 42, 42, 0.8), rgba(74, 45, 58, 0.68) 46%, rgba(35, 52, 52, 0.76));
+  }
+
+  .ks-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.58;
+    background-image:
+      radial-gradient(circle, rgba(255, 255, 255, 0.38) 1px, transparent 1.4px),
+      radial-gradient(circle, rgb(var(--ks-accent) / 0.26) 1px, transparent 1.6px);
+    background-position:
+      0 0,
+      26px 34px;
+    background-size:
+      96px 96px,
+      138px 138px;
+    animation: particleDrift 24s linear infinite;
+  }
+
+  .ks-cinematic-in {
+    animation: cinematicFade 520ms ease-out both;
+  }
+
+  .ks-emotion-card {
+    position: relative;
+    overflow: hidden;
+    background: rgb(255 255 255 / 0.8);
+  }
+
+  .ks-emotion-card::after {
+    position: absolute;
+    inset: auto 16px -54px;
+    height: 88px;
+    border-radius: 999px;
+    content: '';
+    opacity: 0;
+    background: radial-gradient(circle, rgb(var(--ks-accent) / 0.24), transparent 68%);
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .ks-emotion-card:hover::after {
+    opacity: 1;
+    transform: translateY(-18px);
+  }
+
+  .ks-media-drop {
+    display: grid;
+    min-height: 152px;
+    cursor: pointer;
+    align-content: center;
+    gap: 0.55rem;
+    border: 1px dashed rgb(var(--ks-primary) / 0.28);
+    border-radius: 1.35rem;
+    background:
+      radial-gradient(circle at 16% 14%, rgba(255, 255, 255, 0.72), transparent 9rem),
+      rgb(var(--ks-cream) / 0.86);
+    padding: 1.25rem;
+    color: rgb(var(--ks-ink));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .ks-media-drop:hover {
+    border-color: rgb(var(--ks-accent) / 0.58);
+    box-shadow: 0 0 8px rgb(var(--ks-accent) / 0.34);
+    transform: translateY(-2px);
+  }
+
+  .ks-media-drop span {
+    font-weight: 800;
+    color: rgb(var(--ks-ink)) !important;
+  }
+
+  .ks-media-drop small {
+    color: #6b6b6b;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+
+  .ks-media-drop-voice {
+    background:
+      radial-gradient(circle at 18% 15%, rgb(var(--ks-accent) / 0.18), transparent 8rem),
+      rgb(var(--ks-sage-soft) / 0.88);
+  }
+
+  .ks-memory-preview {
+    animation: previewGlow 3.6s ease-in-out infinite;
+  }
+
+  .ks-alive-card {
+    transform-origin: center;
+  }
 }
 
 @media (min-width: 768px) {
@@ -567,5 +682,60 @@
 
   50% {
     transform: translateY(-4px);
+  }
+}
+
+@keyframes cinematicFade {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes particleDrift {
+  0% {
+    background-position:
+      0 0,
+      26px 34px;
+  }
+
+  100% {
+    background-position:
+      96px 96px,
+      164px 172px;
+  }
+}
+
+@keyframes previewGlow {
+  0%,
+  100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  50% {
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      0 0 38px rgb(var(--ks-accent) / 0.22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ks-particles,
+  .ks-cinematic-in,
+  .ks-memory-preview,
+  .message-reveal,
+  .ks-photo-reveal,
+  .ks-caption-reveal,
+  .ks-page-transition,
+  .envelope,
+  .envelope__flap,
+  .envelope__letter,
+  .soft-glow {
+    animation: none !important;
   }
 }

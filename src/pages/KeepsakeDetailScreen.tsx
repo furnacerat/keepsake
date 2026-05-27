@@ -1,9 +1,10 @@
-import { CalendarPlus, Clock, Edit3, Image, LockKeyhole, MailOpen, Mic, Share2, Trash2, UserRound } from 'lucide-react';
+import { useEffect } from 'react';
+import { CalendarPlus, Clock, Edit3, FilePenLine, Image, LockKeyhole, MailOpen, Mic, Share2, Trash2, UserRound, Video } from 'lucide-react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { RelatedKeepsakesPanel } from '../components/RelatedKeepsakesPanel';
 import { TemplateEngine } from '../components/TemplateEngine';
 import { downloadUnlockCalendarEvent } from '../services/calendarExport';
-import { deleteKeepsake, getKeepsake } from '../services/keepsakeStorage';
+import { deleteKeepsake, getKeepsake, updateKeepsake } from '../services/keepsakeStorage';
 
 function getMemoryDate(memoryDate?: string, approximateTimePeriod?: string, createdAt?: string) {
   return memoryDate ?? approximateTimePeriod ?? (createdAt ? new Date(createdAt).toLocaleDateString() : 'Date unknown');
@@ -13,6 +14,11 @@ export function KeepsakeDetailScreen() {
   const navigate = useNavigate();
   const { id } = useParams();
   const keepsake = id ? getKeepsake(id) : undefined;
+
+  useEffect(() => {
+    if (!id) return;
+    updateKeepsake(id, { lastRevisited: new Date().toISOString() });
+  }, [id]);
 
   if (!keepsake) {
     return <Navigate to="/keepsakes" replace />;
@@ -98,6 +104,16 @@ export function KeepsakeDetailScreen() {
                   <Clock size={16} aria-hidden="true" />
                   {memoryDate}
                 </span>
+                {keepsake.memoryMood ? (
+                  <span className="inline-flex items-center gap-2 rounded-full bg-keepsake-blush px-3 py-2 text-keepsake-roseDeep">
+                    {keepsake.memoryMood}
+                  </span>
+                ) : null}
+                {keepsake.visibility ? (
+                  <span className="inline-flex items-center gap-2 rounded-full bg-keepsake-sageSoft px-3 py-2 text-keepsake-ink">
+                    {keepsake.visibility === 'family' ? 'Family-only' : keepsake.visibility}
+                  </span>
+                ) : null}
               </div>
             </div>
             <div className="envelope-stage hidden lg:grid" aria-hidden="true">
@@ -118,6 +134,11 @@ export function KeepsakeDetailScreen() {
           </div>
 
           <div className="message-reveal mt-5 grid gap-3 md:grid-cols-2">
+            {keepsake.coverImage ? (
+              <div className="overflow-hidden rounded-2xl bg-keepsake-cream shadow-soft md:col-span-2">
+                <img className="h-72 w-full object-cover" src={keepsake.coverImage} alt="" />
+              </div>
+            ) : null}
             {keepsake.photoPlaceholder ? (
               <div className="rounded-2xl border border-dashed border-keepsake-roseDeep/20 bg-keepsake-blush/45 p-5">
                 <p className="inline-flex items-center gap-2 text-sm font-extrabold text-keepsake-roseDeep">
@@ -136,7 +157,39 @@ export function KeepsakeDetailScreen() {
                 <p className="mt-2 text-sm leading-6 text-keepsake-muted">A voice memory can be attached here when audio storage is connected.</p>
               </div>
             ) : null}
+            {keepsake.videoPlaceholder ? (
+              <div className="rounded-2xl border border-dashed border-keepsake-roseDeep/20 bg-keepsake-coolGray/70 p-5">
+                <p className="inline-flex items-center gap-2 text-sm font-extrabold text-keepsake-roseDeep">
+                  <Video size={18} aria-hidden="true" />
+                  Video placeholder
+                </p>
+                <p className="mt-2 text-sm leading-6 text-keepsake-muted">A video memory can be attached here when media storage is connected.</p>
+              </div>
+            ) : null}
+            {keepsake.handwrittenPlaceholder ? (
+              <div className="rounded-2xl border border-dashed border-keepsake-roseDeep/20 bg-keepsake-cream p-5">
+                <p className="inline-flex items-center gap-2 text-sm font-extrabold text-keepsake-roseDeep">
+                  <FilePenLine size={18} aria-hidden="true" />
+                  Handwritten note placeholder
+                </p>
+                <p className="mt-2 text-sm leading-6 text-keepsake-muted">A letter, recipe, or scanned note can be attached here later.</p>
+              </div>
+            ) : null}
           </div>
+
+          {keepsake.memoryTags?.length || keepsake.legacyVault || keepsake.futureDelivery || keepsake.collectionName || keepsake.timelineJourney ? (
+            <div className="message-reveal mt-5 flex flex-wrap gap-2">
+              {keepsake.memoryTags?.map((tag) => (
+                <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-keepsake-accentStrong shadow-soft" key={tag}>
+                  {tag}
+                </span>
+              ))}
+              {keepsake.collectionName ? <span className="rounded-full bg-keepsake-cream px-3 py-1 text-xs font-extrabold text-keepsake-muted">{keepsake.collectionName}</span> : null}
+              {keepsake.timelineJourney ? <span className="rounded-full bg-keepsake-sageSoft px-3 py-1 text-xs font-extrabold text-keepsake-ink">{keepsake.timelineJourney}</span> : null}
+              {keepsake.futureDelivery ? <span className="rounded-full bg-keepsake-blush px-3 py-1 text-xs font-extrabold text-keepsake-roseDeep">Future delivery</span> : null}
+              {keepsake.legacyVault ? <span className="rounded-full bg-keepsake-ink px-3 py-1 text-xs font-extrabold text-white">Legacy Vault</span> : null}
+            </div>
+          ) : null}
 
           {hasDesignedTemplate ? (
             <div className="message-reveal mt-7">

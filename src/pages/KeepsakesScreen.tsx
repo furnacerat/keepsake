@@ -1,4 +1,16 @@
-import { CalendarClock, LockKeyhole, Plus, Search, Sparkles, UnlockKeyhole, UserRound } from 'lucide-react';
+import {
+  CalendarClock,
+  Clock3,
+  Image,
+  LockKeyhole,
+  Mic,
+  Plus,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  UnlockKeyhole,
+  UserRound,
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Keepsake } from '../models/keepsake';
@@ -20,6 +32,57 @@ function getPreview(message: string) {
   return message.length > 135 ? `${message.slice(0, 132)}...` : message;
 }
 
+function formatLastRevisited(lastRevisited?: string) {
+  if (!lastRevisited) return 'Waiting to be revisited';
+
+  return `Last revisited ${new Date(lastRevisited).toLocaleDateString()}`;
+}
+
+function getRediscoveryLine(keepsake: Keepsake) {
+  const memoryDate = keepsake.memoryDate ? new Date(keepsake.memoryDate) : undefined;
+  const today = new Date();
+  if (
+    memoryDate &&
+    memoryDate.getMonth() === today.getMonth() &&
+    memoryDate.getDate() === today.getDate() &&
+    memoryDate.getFullYear() !== today.getFullYear()
+  ) {
+    return 'An anniversary is quietly asking to be remembered today.';
+  }
+
+  if (keepsake.memoryMood) {
+    return `A ${keepsake.memoryMood.toLowerCase()} memory worth returning to.`;
+  }
+
+  return 'Some stories become softer and stronger each time you return.';
+}
+
+const rediscoveryQuotes = [
+  'A memory revisited is a memory kept warm.',
+  'The small details are often the ones that stay.',
+  'Some stories deserve another quiet minute.',
+  'Future you will be glad this was saved.',
+];
+
+const legacyFeatures = [
+  {
+    title: 'Family Sharing',
+    description: 'Prepare memories for a private family circle when accounts are connected.',
+  },
+  {
+    title: 'Future Delivery',
+    description: 'Mark messages that should arrive on a birthday, anniversary, or someday later.',
+  },
+  {
+    title: 'Legacy Vaults',
+    description: 'Group the keepsakes that should live beyond a single moment or device.',
+  },
+  {
+    title: 'Timeline Journeys',
+    description: 'Shape collections into chapters like Childhood, First Home, or Family Recipes.',
+  },
+];
+
 export function KeepsakesScreen() {
   const keepsakes = getKeepsakes();
   const [query, setQuery] = useState('');
@@ -34,6 +97,7 @@ export function KeepsakesScreen() {
     const index = new Date().getDay() % keepsakes.length;
     return keepsakes[index];
   }, [keepsakes]);
+  const rediscoveryQuote = rediscoveryQuotes[new Date().getDate() % rediscoveryQuotes.length];
   const filteredKeepsakes = useMemo(() => {
     const normalizedQuery = query.toLowerCase().trim();
     return keepsakes.filter((keepsake) => {
@@ -113,7 +177,7 @@ export function KeepsakesScreen() {
               <Sparkles size={20} aria-hidden="true" />
             </span>
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.08em] text-keepsake-accentStrong">Memory of the Week</p>
+              <p className="text-xs font-bold uppercase tracking-[0.08em] text-keepsake-accentStrong">Rediscover a Memory</p>
               <h2 className="font-heading text-3xl font-bold leading-none text-keepsake-ink">Rediscover a Keepsake</h2>
             </div>
           </div>
@@ -124,10 +188,14 @@ export function KeepsakesScreen() {
                 {rediscoveredKeepsake.person ? `${rediscoveredKeepsake.person} - ` : ''}
                 {getMemoryDate(rediscoveredKeepsake)}
               </p>
+              <p className="mt-3 text-sm leading-6 text-keepsake-muted">{getRediscoveryLine(rediscoveredKeepsake)}</p>
+              <p className="mt-4 rounded-2xl bg-white/84 px-4 py-3 font-heading text-xl font-bold leading-snug text-keepsake-ink">
+                "{rediscoveryQuote}"
+              </p>
             </Link>
           ) : (
             <p className="mt-4 text-sm leading-6 text-keepsake-muted">
-              Create your first keepsake, and this space will begin bringing meaningful memories back to you.
+              One memory today can become a treasure years from now. This space will begin surfacing old stories once you save your first keepsake.
             </p>
           )}
         </aside>
@@ -150,9 +218,9 @@ export function KeepsakesScreen() {
 
       {keepsakes.length === 0 ? (
         <div className="ks-card max-w-2xl p-5 md:p-6">
-          <p className="font-heading text-3xl font-bold text-keepsake-ink">Your memory library is waiting.</p>
+          <p className="font-heading text-3xl font-bold text-keepsake-ink">The stories worth preserving can begin here.</p>
           <p className="mt-2 text-base leading-7 text-keepsake-muted">
-            Start with one photo, one voice, or one story. The first keepsake does not need to be perfect; it just needs to begin.
+            Start with one photo, one voice, or one story. It does not need to be perfect; it only needs to be true.
           </p>
           <Link
             className="ks-button-primary mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full px-4 text-sm font-extrabold"
@@ -173,7 +241,26 @@ export function KeepsakesScreen() {
             const StatusIcon = isLocked ? LockKeyhole : UnlockKeyhole;
 
             return (
-              <article className="ks-card p-4 transition active:scale-[0.985] hover:-translate-y-0.5 hover:shadow-[0_22px_52px_rgba(86,52,47,0.16)] md:p-6" key={keepsake.id}>
+              <article className="ks-alive-card ks-card overflow-hidden p-0 transition active:scale-[0.985] hover:-translate-y-1 hover:shadow-[0_24px_58px_rgba(86,52,47,0.18)]" key={keepsake.id}>
+                <div className="relative min-h-36 overflow-hidden bg-gradient-to-br from-keepsake-blush via-keepsake-cream to-keepsake-sageSoft">
+                  {keepsake.coverImage ? (
+                    <img className="absolute inset-0 h-full w-full object-cover" src={keepsake.coverImage} alt="" loading="lazy" />
+                  ) : (
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_20%,rgba(255,255,255,0.9),transparent_32%),linear-gradient(135deg,rgba(245,232,228,0.92),rgba(253,247,227,0.82),rgba(232,240,232,0.82))]" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#352a2a]/62 via-[#352a2a]/12 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
+                    <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-extrabold text-keepsake-roseDeep shadow-soft">
+                      {keepsake.memoryMood ?? 'Meaningful'}
+                    </span>
+                    {keepsake.voicePlaceholder ? (
+                      <span className="grid h-9 w-9 place-items-center rounded-full bg-keepsake-ink/88 text-white shadow-soft" title="Voice memory">
+                        <Mic size={16} aria-hidden="true" />
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="p-4 md:p-6">
                 <div className="flex items-start justify-between gap-3">
                   <h2 className="font-heading text-[1.7rem] font-bold leading-none text-keepsake-ink md:text-2xl">
                     {keepsake.title}
@@ -195,12 +282,26 @@ export function KeepsakesScreen() {
                   </p>
                   <p className="inline-flex items-center gap-2">
                     <CalendarClock size={16} aria-hidden="true" />
+                    {keepsake.timelineJourney ? `${keepsake.timelineJourney} - ` : ''}
                     {getMemoryDate(keepsake)}
+                  </p>
+                  <p className="inline-flex items-center gap-2">
+                    <Clock3 size={16} aria-hidden="true" />
+                    {formatLastRevisited(keepsake.lastRevisited)}
                   </p>
                 </div>
                 <p className="mt-3 rounded-2xl bg-keepsake-cream p-3 text-sm leading-6 text-keepsake-muted">
                   {getPreview(keepsake.message)}
                 </p>
+                {keepsake.memoryTags?.length ? (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {keepsake.memoryTags.slice(0, 3).map((tag) => (
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-keepsake-accentStrong shadow-soft" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <span className="rounded-full bg-keepsake-blush px-3 py-1 text-xs font-extrabold text-keepsake-roseDeep">
                     {keepsake.memoryType ?? keepsake.ideaType}
@@ -213,11 +314,36 @@ export function KeepsakesScreen() {
                   </Link>
                 </div>
                 <p className="mt-3 text-xs font-bold text-keepsake-muted">{formatUnlockInfo(keepsake.unlockType, keepsake.unlockDate)}</p>
+                </div>
               </article>
             );
           })}
         </div>
       )}
+
+      <section className="ks-card p-5 md:p-6">
+        <div className="flex items-start gap-3">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-keepsake-sageSoft text-keepsake-accentStrong shadow-soft">
+            <ShieldCheck size={20} aria-hidden="true" />
+          </span>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.08em] text-keepsake-accentStrong">Legacy features</p>
+            <h2 className="font-heading text-3xl font-bold leading-none text-keepsake-ink">A quiet foundation for what comes next.</h2>
+            <p className="mt-3 text-sm leading-6 text-keepsake-muted">
+              These spaces are prepared in the interface now, so future sharing, delivery, collections, and vault logic can attach cleanly later.
+            </p>
+          </div>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+          {legacyFeatures.map((feature) => (
+            <div className="rounded-2xl bg-keepsake-cream p-4 shadow-soft" key={feature.title}>
+              <Image className="text-keepsake-accentStrong" size={18} aria-hidden="true" />
+              <h3 className="mt-3 font-heading text-2xl font-bold leading-none text-keepsake-ink">{feature.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-keepsake-muted">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </section>
   );
 }
